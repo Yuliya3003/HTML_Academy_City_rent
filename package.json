@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "vitest --passWithNoTests",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "homepage": "https://yuliya3003.github.io/HTML_Academy_City_rent/"
   },
   "dependencies": {
