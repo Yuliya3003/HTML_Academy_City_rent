@@ -1,9 +1,9 @@
-name: Deploy My React app to GitHub Pages
+name: Deploy React app to GitHub Pages
 
 on:
   push:
     branches:
-      - master  
+      - master
 
 jobs:
   deploy:
@@ -24,12 +24,14 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      - name: Configure Git user
+      - name: Configure Git to use GH_TOKEN for authentication
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
+          git config --global url."https://github.com/".insteadOf "git://github.com/"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
+          
       - name: Deploy to GitHub Pages
         run: npm run deploy
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}  
