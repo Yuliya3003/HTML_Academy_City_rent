@@ -1,0 +1,30 @@
+name: Deploy React app to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master  # Триггер для деплоя на главную ветку (или master, если используете её)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Укажите нужную версию Node.js
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        run: npm run deploy
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}  # Убедитесь, что настроили токен

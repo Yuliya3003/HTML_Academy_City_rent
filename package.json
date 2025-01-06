@@ -7,7 +7,10 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx",
     "preview": "vite preview",
-    "test": "vitest --passWithNoTests"
+    "test": "vitest --passWithNoTests",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "homepage": "https://yuliya3003.github.io/HTML_Academy_City_rent/"
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.9.7",
@@ -46,6 +49,7 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-react-refresh": "0.4.3",
     "faker": "5.5.3",
+    "gh-pages": "^6.3.0",
     "jsdom": "22.1.0",
     "prettier": "^3.4.2",
     "typescript": "5.2.2",
