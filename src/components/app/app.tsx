@@ -50,9 +50,16 @@ function App(): JSX.Element {
         const useYuliyaHypotesis = false; 
            // hash % 3 === 2;
 
+        const group =  usePopupDialogs ? 'popups' : (useYuliyaHypotesis ? 'yuliya' : 'common');
+
         // hash is unused variable
         console.log('yandex metrika has been found ', hash);
-        console.log('prototype: ', usePopupDialogs ? 'popups' : (useYuliyaHypotesis ? 'yuliya' : 'common'));
+        console.log('prototype: ', group);
+
+        // @ts-ignore
+        ym(99437467, 'userParams', {
+          group: group
+        });
 
         setUsePopup(usePopupDialogs);
         setYuliyaHypotesis(useYuliyaHypotesis);
