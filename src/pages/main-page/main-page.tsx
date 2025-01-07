@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Map from '../../components/map/map.tsx';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks.ts';
 import OffersList from '../../components/offers-list/offers-list.tsx';
@@ -10,13 +10,31 @@ import Header from '../../components/header/header.tsx';
 import convertOffersToPoints from '../../utils/convert-offers-to-points/convert-offers-to-points.tsx';
 import MainEmpty from './main-empty.tsx';
 
+import CustomPopup from '../../components/custom-popup/custom-popup.tsx';
 
-const MainPage = (): JSX.Element => {
+enum PopupState {
+  DO_NOT_SHOW,
+  READY_TO_SHOW,
+  ALREADY_SHOWN
+}
+
+export interface IMainPage {
+  usePopup: boolean;
+}
+
+const MainPage = ({ usePopup }: IMainPage): JSX.Element => {
+  const [ showPopup, setShowPopup ] = useState(PopupState.DO_NOT_SHOW);
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.offersSlice.loading);
   const city = useAppSelector((state) => state.offersSlice.city);
   const cityOffers = useAppSelector((state) => state.offersSlice.cityOffers);
   const sortOrder = useAppSelector((state) => state.offersSlice.sortOrder);
+
+  useEffect(() => {
+    if (usePopup && cityOffers.length !== 0 && showPopup === PopupState.DO_NOT_SHOW) {
+      setShowPopup(PopupState.READY_TO_SHOW);
+    }
+  }, [usePopup]);
 
   useEffect(() => {
     if (!loading) {
@@ -58,6 +76,13 @@ const MainPage = (): JSX.Element => {
       ),
     [cityOffers, city, mapPoints]
   );
+
+
+  if (showPopup === PopupState.READY_TO_SHOW) {
+    return (
+      <CustomPopup offer={cityOffers[0]} onClose={() => setShowPopup(PopupState.ALREADY_SHOWN)} />
+    );
+  }
 
   return (
     <div className="page page--gray page--main">

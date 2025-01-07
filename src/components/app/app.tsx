@@ -9,19 +9,49 @@ import useAppInit from '../../utils/use-init-app/use-init-app';
 import { APP_ROUTES } from '../../services/constants';
 import { useEffect } from 'react';
 
+import { useState } from 'react';
+
+function stringToIntHash(str: string): number {
+  let hash = 0;
+  const prime = 31; // A small prime number for better distribution
+
+  for (let i = 0; i < str.length; i++) {
+      const charCode = str.charCodeAt(i); // Get the ASCII/Unicode value of the character
+      hash = (hash * prime + charCode) | 0; // Use bitwise OR to ensure a 32-bit integer
+  }
+
+  return hash;
+}
+
 function App(): JSX.Element {
+  const [usePopup, setUsePopup] = useState(false);
+  const [useYuliyaHypotesis, setYuliyaHypotesis] = useState(false);
+
   useAppInit();
   useEffect(() => {
+    // need to wait fo yandex metrika loading
     setTimeout(() => {
       // yandex metrika 
       var counter = (window as any).yaCounter99437467;
     
       if (counter && counter.getClientID) {
-        counter.getClientID().then((clientID: number) => {
-          console.log("Client ID текущего пользователя:", clientID);
-        }).catch((error: string) => {
-          console.error("Ошибка получения Client ID:", error);
-        });
+        const id: string = counter.getClientID();
+        const hash = stringToIntHash(id);
+
+        // ensure that it is even chance
+        //      33% - no change 
+        //      33% - popups 
+        //      33% - Yuliya 
+        const usePopupDialogs = true; 
+          // hash % 3 === 1;
+        const useYuliyaHypotesis = false; 
+           // hash % 3 === 2;
+
+        console.log('yandex metrika has been found');
+        console.log('prototype: ', usePopupDialogs ? 'popups' : (useYuliyaHypotesis ? 'yuliya' : 'common'));
+
+        setUsePopup(usePopupDialogs);
+        setYuliyaHypotesis(useYuliyaHypotesis);
       } else {
         console.error("Счетчик Яндекс Метрики не найден или не загружен.");
       }
@@ -30,7 +60,7 @@ function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={APP_ROUTES.MAIN} element={<MainPage />} />
+        <Route path={APP_ROUTES.MAIN} element={<MainPage usePopup={usePopup} />} />
         <Route path={APP_ROUTES.LOGIN} element={<LoginPage />} />
         <Route
           path={APP_ROUTES.FAVORITES}
