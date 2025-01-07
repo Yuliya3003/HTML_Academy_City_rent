@@ -67,11 +67,14 @@ function App(): JSX.Element {
         <Route path={APP_ROUTES.MAIN} element={<MainPage usePopup={usePopup} />} />
         <Route path={'/HTML_Academy_City_rent'} element={<MainPage usePopup={usePopup} />}/>
         <Route path={APP_ROUTES.LOGIN} element={<LoginPage />} />
+        <Route path={'/HTML_Academy_City_rent/login'} element={<LoginPage />}/>
         <Route
           path={APP_ROUTES.FAVORITES}
           element={<PrivateRoute element={<FavoritesPage />} />}
         />
+        <Route path={'/HTML_Academy_City_rent/favorites'} element={<PrivateRoute element={<FavoritesPage />} />}/>
         <Route path={APP_ROUTES.OFFER(':id')} element={<OfferPage />} />
+        <Route path={'/HTML_Academy_City_rent' + APP_ROUTES.OFFER(':id')} element={<OfferPage />} />
         <Route path="/*" element={<Error404 description="Error" />} />
       </Routes>
     </BrowserRouter>
