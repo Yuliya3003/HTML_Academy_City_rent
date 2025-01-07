@@ -27,6 +27,9 @@ function App(): JSX.Element {
   const [usePopup, setUsePopup] = useState(false);
   const [useYuliyaHypotesis, setYuliyaHypotesis] = useState(false);
 
+  // unused variable
+  console.log(useYuliyaHypotesis);
+
   useAppInit();
   useEffect(() => {
     // need to wait fo yandex metrika loading
@@ -47,7 +50,8 @@ function App(): JSX.Element {
         const useYuliyaHypotesis = false; 
            // hash % 3 === 2;
 
-        console.log('yandex metrika has been found');
+        // hash is unused variable
+        console.log('yandex metrika has been found ', hash);
         console.log('prototype: ', usePopupDialogs ? 'popups' : (useYuliyaHypotesis ? 'yuliya' : 'common'));
 
         setUsePopup(usePopupDialogs);
