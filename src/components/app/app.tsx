@@ -65,6 +65,7 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path={APP_ROUTES.MAIN} element={<MainPage usePopup={usePopup} />} />
+        <Route path={'/HTML_Academy_City_rent'} element={<MainPage usePopup={usePopup} />}/>
         <Route path={APP_ROUTES.LOGIN} element={<LoginPage />} />
         <Route
           path={APP_ROUTES.FAVORITES}
