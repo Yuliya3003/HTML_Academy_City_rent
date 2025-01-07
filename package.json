@@ -2,6 +2,7 @@
   "name": "six-cities",
   "version": "14.0.0",
   "type": "module",
+  "homepage": "https://timetostop.github.io/HTML_Academy_City_rent/",
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
